@@ -19,9 +19,16 @@ A script that checks:
 
 ## TODO :
 - reading and archiving emails easily !
+- reading gemini offline
+
 
 ## newsboat_config
 
 file to be put in .newsboat/config
 
 with this file, every external link will, instead of being opened in a browser, send to the URLs text file (that will later be sent by email to forlater.email).
+
+## Non-urgent :
+- optional : apt update/dist-upgrade
+- optional : flatpak upgrade
+- optional : update wikipedia zim files  (I’ve yet to find a way to do it)
