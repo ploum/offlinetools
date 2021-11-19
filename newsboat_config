@@ -1,0 +1,3 @@
+browser "echo %u >> ~/inbox/to_read/urls.txt"
+download-full-page yes
+text-width 80
