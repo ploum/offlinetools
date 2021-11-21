@@ -1,8 +1,11 @@
 #!/bin/bash -e
 # dependancies : mblaze, msmtp, offlineimap, newsboat
+# parameters
+rss_refresh_interval=21600
 inbox=~/mail/INBOX
 news=~/mail/Folders.News
 forlater="save@forlater.email"
+
 
 # Check for protonmail bridge
 pid=`pgrep protonmail|wc -l`
@@ -19,8 +22,10 @@ enqueue=/usr/share/doc/msmtp/examples/msmtpqueue/msmtp-enqueue.sh
 listqueue=/usr/share/doc/msmtp/examples/msmtpqueue/msmtp-listqueue.sh
 runqueue=/usr/share/doc/msmtp/examples/msmtpqueue/msmtp-runqueue.sh
 getmail="offlineimap -o"
+notmuch="notmuch new"
 getrss="newsboat -x reload"
 displayrss="newsboat -x print-unread"
+news_cache=~/.newsboat/cache.db
 
 # First part : sending URLs to save@forlater.email
 urls=~/inbox/to_read/urls.txt
@@ -43,15 +48,27 @@ else
 fi
 
 # Second part: sending mails
+echo "***** Mails to send *****"
 $listqueue
+echo "***** mails sent ! *****"
 $runqueue
 
-# Third part: getting rss
-echo "Fetching RSS… (usually slow, this may give time to some forlater emails to arrive)"
-$getrss
+# Third part: getting rss every $rss_refresh_interval (in seconds)
+current=`date +%s`
+last_modified=`stat -c %Y $news_cache`
+echo "****** RSS ******"
+if [ $(( $current - $last_modified)) -gt $rss_refresh_interval ]
+then
+	echo "Fetching RSS… (usually slow)"
+	$getrss
+else
+	echo "No RSS refresh for now"
+fi
 
 # Fourth part: getting mail
+echo "******* Sync IMAP ******"
 $getmail
+$notmuch
 
 # Fifth part : shutting down
 echo "You can shutdown protonmail-bridge"
