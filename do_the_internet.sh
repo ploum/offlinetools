@@ -1,7 +1,7 @@
 #!/bin/bash -e
 # dependancies : mblaze, msmtp, offlineimap, newsboat
 # parameters
-rss_refresh_interval=21600
+rss_refresh_interval=43200
 inbox=~/mail/INBOX
 news=~/mail/Folders.News
 forlater="save@forlater.email"
@@ -79,8 +79,11 @@ echo "******************"
 echo "$($displayrss) in RSS newsboat"
 nb_news=$(mlist $news|wc -l)
 echo "$nb_news article(s) to read in news"
-mlist $news|mscan -f %10d%t%2i%s
+mlist $news|mblaze-sort|mscan -f %10d%t%2i%s
 echo "*****************"
 nb_inbox=$(mlist $inbox|wc -l)
 echo "$nb_inbox mail(s) in Inbox"
-mlist $inbox|mscan
+mlist $inbox|mblaze-sort|mthread|mscan
+echo "************"
+echo "TODO : check calendar and URLs"
+echo "TODO : list of current projects with next tasks"
