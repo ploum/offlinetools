@@ -4,6 +4,7 @@ header=~/dev/offlinetools/manuscript_templates/header.tex
 
 pandoc *.md \
     -f gfm \
+    --metadata-file=metadata.yaml \
     --toc \
     --standalone \
     --top-level-division=chapter \
