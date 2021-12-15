@@ -6,7 +6,6 @@ inbox=~/mail/INBOX
 news=~/mail/Folders.News
 forlater="save@forlater.email"
 
-
 # Check for protonmail bridge
 pid=`pgrep protonmail|wc -l`
 if [ $pid -gt 0 ]
@@ -83,7 +82,7 @@ mlist $news|mblaze-sort -d|mscan -f %10d%t%2i%s
 echo "*****************"
 nb_inbox=$(mlist $inbox|wc -l)
 echo "$nb_inbox mail(s) in Inbox"
-mlist $inbox|mblaze-sort -d|mthread|mscan
+mlist $inbox|mblaze-sort -d|mscan
 echo "************"
 echo "TODO : check calendar and URLs"
 echo "TODO : list of current projects with next tasks"
