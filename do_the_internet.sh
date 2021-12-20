@@ -4,6 +4,7 @@
 refresh_interval=43200
 inbox=~/mail/INBOX
 news=~/mail/Folders.News
+online_folder=~/mail/Folders.online
 forlater="save@forlater.email"
 urls=~/inbox/to_read/urls.txt
 # Offline mail and RSS command
@@ -16,7 +17,7 @@ getrss="newsboat -x reload"
 displayrss="newsboat -x print-unread"
 news_cache=~/.newsboat/cache.db
 geminisync=~/dev/AV-98-offline/av98.py
-
+geminitour=~/.config/av98/tour
 
 send_urls () {
 	# First part : sending URLs to save@forlater.email
@@ -78,7 +79,10 @@ display_dashboard() {
 	# Sixth part : dashboard
 	echo "$($displayrss) in RSS newsboat"
 	nb_news=$(mlist $news|wc -l)
-	echo "$nb_news article(s) to read in news"
+	nb_online=$(mlist $online_folder|wc -l)
+	nb_gemini=$(cat $geminitour|wc -l)
+	echo "$nb_gemini article(s) to read in gemini tour"
+	echo "$nb_news article(s) to read in news :"
 	mlist $news|mblaze-sort -d|mscan -f %10d%t%2i%s
 	echo "*****************"
 	nb_inbox=$(mlist $inbox|wc -l)
@@ -86,6 +90,7 @@ display_dashboard() {
 	mlist $inbox|mblaze-sort -d|mscan
 	echo "************"
 	echo "TODO : list of current projects with next tasks"
+	echo "$nb_online tasks to do online"
 }
 
 shutdown_connection() {
