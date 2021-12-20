@@ -40,11 +40,13 @@ send_urls () {
 	fi
 }
 
-send_emails() {
-	# Second part: sending mails
+list_outbox() {
 	echo "***** Mails to send *****"
 	$listqueue
-	echo "***** mails sent ! *****"
+}
+
+send_emails() {
+	echo "***** Sending mails ! *****"
 	$runqueue
 }
 
@@ -105,6 +107,7 @@ if [ $pid -gt 0 ]
 then
 	echo "Protonmail Bridge running"
 	send_urls
+	list_outbox
 	send_emails
 	refresh_rss
 	refresh_gemini
@@ -112,6 +115,7 @@ then
 	shutdown_connection
 else
 	echo " * * * Protonmail Bridge not running ! * * *"
+	list_outbox
 fi
 
 display_dashboard
