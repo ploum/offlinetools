@@ -1,6 +1,6 @@
 #!/bin/bash
 focusbox=~/focusbox
-for i in $focusbox/*; 
+for i in "$focusbox"/*; 
 do
-	echo $i
+	echo "$i"
 done
