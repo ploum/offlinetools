@@ -16,8 +16,8 @@ notmuch="notmuch new"
 getrss="newsboat -x reload"
 displayrss="newsboat -x print-unread"
 news_cache=~/.newsboat/cache.db
-geminisync=~/dev/AV-98-offline/av98.py
-geminitour=~/.config/av98/tour
+geminisync=~/dev/AV-98-offline/offpunk.py
+geminitour=~/.config/offpunk/tour
 
 send_urls () {
 	# First part : sending URLs to save@forlater.email
@@ -85,6 +85,7 @@ display_dashboard() {
 	nb_gemini=$(cat $geminitour|wc -l)
 	echo "$nb_gemini article(s) to read in gemini tour"
 	echo "$nb_news article(s) to read in news :"
+	echo "- - - - - - - - "
 	mlist $news|mblaze-sort -d|mscan -f %10d%t%2i%s
 	echo "*****************"
 	nb_inbox=$(mlist $inbox|wc -l)
