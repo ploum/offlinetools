@@ -16,7 +16,7 @@ notmuch="notmuch new"
 getrss="newsboat -x reload"
 displayrss="newsboat -x print-unread"
 news_cache=~/.newsboat/cache.db
-geminisync=~/dev/AV-98-offline/offpunk.py
+geminisync=~/dev/offpunk/offpunk.py
 geminitour=~/.config/offpunk/tour
 
 send_urls () {
@@ -92,13 +92,12 @@ display_dashboard() {
 	echo "$nb_inbox mail(s) in Inbox"
 	mlist $inbox|mblaze-sort -d|mscan
 	echo "************"
-	echo "TODO : list of current projects with next tasks"
+	echo "TODO : calendar, push git, open URLS, list of tasks"
 	echo "$nb_online tasks to do online"
 }
 
 shutdown_connection() {
 	echo "You can shutdown protonmail-bridge"
-	echo "TODO : check calendar, tresorit and URLs"
 }
 
 
