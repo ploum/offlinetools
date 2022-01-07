@@ -28,9 +28,10 @@ send_urls () {
 	headers=3
 	# number of line in urls (we need only the first char)
 	# 3 first lines are mail header
-	nb=$(wc -l $urls)
-	if [ ${nb::1} -gt $headers ]
+	nb=$(cat $urls| wc -l)
+	if [ ${nb} -gt $headers ]
 	then
+		echo "sending urls"
 		$enqueue $forlater < $urls
 		# once send, we remove URLS by rewriting the file (-i)
 		# with only the three first lines (header)
