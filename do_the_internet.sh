@@ -7,6 +7,7 @@ news=~/mail/Folders.News
 online_folder=~/mail/Folders.online
 forlater="save@forlater.email"
 urls=~/inbox/to_read/urls.txt
+to_fetch=~/.config/offpunk/to_fetch
 # Offline mail and RSS command
 enqueue=/usr/share/doc/msmtp/examples/msmtpqueue/msmtp-enqueue.sh
 listqueue=/usr/share/doc/msmtp/examples/msmtpqueue/msmtp-listqueue.sh
@@ -18,14 +19,14 @@ displayrss="newsboat -x print-unread"
 news_cache=~/.newsboat/cache.db
 geminisync=~/dev/offpunk/offpunk.py
 geminitour=~/.config/offpunk/tour
+#number of header lines in urls.txt
+#To: save@forlater.email
+#Subject: Urls
+# blank line
+headers=3
 
 send_urls () {
 	# First part : sending URLs to save@forlater.email
-	#number of header lines in urls.txt
-	#To: save@forlater.email
-	#Subject: Urls
-	# blank line
-	headers=3
 	# number of line in urls (we need only the first char)
 	# 3 first lines are mail header
 	nb=$(cat $urls| wc -l)
@@ -117,6 +118,13 @@ then
 else
 	echo " * * * Protonmail Bridge not running ! * * *"
 	list_outbox
+	nb_fetch=$(cat $to_fetch|wc -l)
+	tmp=$(cat $urls|wc -l)
+	nb_forlater=$(($tmp-$headers))
+	echo " * * $nb_fetch in Offpunk fetch list"
+	cat $to_fetch
+	echo " * * $nb_forlater in Forlater list"
+	tail +$(($headers+1)) $urls
 fi
 
 display_dashboard
