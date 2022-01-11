@@ -7,6 +7,7 @@ news=~/mail/Folders.News
 online_folder=~/mail/Folders.online
 forlater="save@forlater.email"
 urls=~/inbox/to_read/urls.txt
+to_fetch=~/.config/offpunk/to_fetch
 # Offline mail and RSS command
 enqueue=/usr/share/doc/msmtp/examples/msmtpqueue/msmtp-enqueue.sh
 listqueue=/usr/share/doc/msmtp/examples/msmtpqueue/msmtp-listqueue.sh
@@ -16,21 +17,22 @@ notmuch="notmuch new"
 getrss="newsboat -x reload"
 displayrss="newsboat -x print-unread"
 news_cache=~/.newsboat/cache.db
-geminisync=~/dev/AV-98-offline/av98.py
-geminitour=~/.config/av98/tour
+geminisync=~/dev/offpunk/offpunk.py
+geminitour=~/.config/offpunk/tour
+#number of header lines in urls.txt
+#To: save@forlater.email
+#Subject: Urls
+# blank line
+headers=3
 
 send_urls () {
 	# First part : sending URLs to save@forlater.email
-	#number of header lines in urls.txt
-	#To: save@forlater.email
-	#Subject: Urls
-	# blank line
-	headers=3
 	# number of line in urls (we need only the first char)
 	# 3 first lines are mail header
-	nb=$(wc -l $urls)
-	if [ "${nb::1}" -gt $headers ]
+	nb=$(cat $urls| wc -l)
+	if [ "${nb}" -gt $headers ]
 	then
+		echo "sending urls"
 		$enqueue $forlater < $urls
 		# once send, we remove URLS by rewriting the file (-i)
 		# with only the three first lines (header)
@@ -85,19 +87,19 @@ display_dashboard() {
 	nb_gemini=$(cat $geminitour|wc -l)
 	echo "$nb_gemini article(s) to read in gemini tour"
 	echo "$nb_news article(s) to read in news :"
+	echo "- - - - - - - - "
 	mlist $news|mblaze-sort -d|mscan -f %10d%t%2i%s
 	echo "*****************"
 	nb_inbox=$(mlist $inbox|wc -l)
 	echo "$nb_inbox mail(s) in Inbox"
 	mlist $inbox|mblaze-sort -d|mscan
 	echo "************"
-	echo "TODO : list of current projects with next tasks"
+	echo "TODO : calendar, push git, open URLS, list of tasks"
 	echo "$nb_online tasks to do online"
 }
 
 shutdown_connection() {
 	echo "You can shutdown protonmail-bridge"
-	echo "TODO : check calendar, tresorit and URLs"
 }
 
 
@@ -116,6 +118,13 @@ then
 else
 	echo " * * * Protonmail Bridge not running ! * * *"
 	list_outbox
+	nb_fetch=$(cat $to_fetch|wc -l)
+	tmp=$(cat $urls|wc -l)
+	nb_forlater=$(($tmp-$headers))
+	echo " * * $nb_fetch in Offpunk fetch list"
+	cat $to_fetch
+	echo " * * $nb_forlater in Forlater list"
+	tail +$(($headers+1)) $urls
 fi
 
 display_dashboard
