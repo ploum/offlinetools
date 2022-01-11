@@ -2,7 +2,7 @@
 # https://dev.to/learnbyexample/customizing-pandoc-to-generate-beautiful-pdfs-from-markdown-3lbj
 header=~/dev/offlinetools/manuscript_templates/header.tex
 
-pandoc *.md \
+pandoc -- *.md \
     -f gfm \
     --metadata-file=metadata.yaml \
     --toc \

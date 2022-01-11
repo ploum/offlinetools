@@ -30,7 +30,7 @@ send_urls () {
 	# number of line in urls (we need only the first char)
 	# 3 first lines are mail header
 	nb=$(cat $urls| wc -l)
-	if [ ${nb} -gt $headers ]
+	if [ "${nb}" -gt $headers ]
 	then
 		echo "sending urls"
 		$enqueue $forlater < $urls
@@ -54,10 +54,10 @@ send_emails() {
 
 refresh_rss() {
 	# Third part: getting rss every $refresh_interval (in seconds)
-	current=`date +%s`
-	last_modified=`stat -c %Y $news_cache`
+	current=$(date +%s)
+	last_modified=$(stat -c %Y $news_cache)
 	echo "****** RSS and Gemini ******"
-	if [ $(( $current - $last_modified)) -gt $refresh_interval ]
+	if [ $(( current - last_modified)) -gt $refresh_interval ]
 	then
 		echo "Fetching RSS… (usually slow)"
 		$getrss
@@ -104,8 +104,8 @@ shutdown_connection() {
 
 
 # Check for protonmail bridge
-pid=`pgrep protonmail|wc -l`
-if [ $pid -gt 0 ]
+pid=$(pgrep protonmail|wc -l)
+if [ "$pid" -gt 0 ]
 then
 	echo "Protonmail Bridge running"
 	send_urls
