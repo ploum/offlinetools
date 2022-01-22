@@ -67,7 +67,7 @@ refresh_rss() {
 }
 
 refresh_gemini() {
-	$geminisync --sync --cache-validity $refresh_interval
+	$geminisync --sync --assume-yes --cache-validity $refresh_interval
 }
 
 fetch_emails() {
