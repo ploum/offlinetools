@@ -7,7 +7,7 @@ news=~/mail/Folders.News
 online_folder=~/mail/Folders.online
 forlater="save@forlater.email"
 urls=~/inbox/to_read/urls.txt
-to_fetch=~/.config/offpunk/to_fetch
+to_fetch=~/.local/share/offpunk/lists/to_fetch.gmi
 # Offline mail and RSS command
 enqueue=/usr/share/doc/msmtp/examples/msmtpqueue/msmtp-enqueue.sh
 listqueue=/usr/share/doc/msmtp/examples/msmtpqueue/msmtp-listqueue.sh
@@ -18,7 +18,8 @@ getrss="newsboat -x reload"
 displayrss="newsboat -x print-unread"
 news_cache=~/.newsboat/cache.db
 geminisync=~/dev/offpunk/offpunk.py
-geminitour=~/.config/offpunk/tour
+geminitour=~/.local/share/offpunk/lists/tour.gmi
+geminitoread=~/.local/share/offpunk/lists/toread.gmi
 #number of header lines in urls.txt
 #To: save@forlater.email
 #Subject: Urls
@@ -85,7 +86,9 @@ display_dashboard() {
 	nb_news=$(mlist $news|wc -l)
 	nb_online=$(mlist $online_folder|wc -l)
 	nb_gemini=$(cat $geminitour|wc -l)
+	nb_gemini_toread=$(cat $geminitoread|grep "=>"|wc -l)
 	echo "$nb_gemini article(s) to read in gemini tour"
+	echo "$nb_gemini_toread article(s) to read in offpunk toread"
 	echo "$nb_news article(s) to read in news :"
 	echo "- - - - - - - - "
 	mlist $news|mblaze-sort -d|mscan -f %10d%t%2i%s
