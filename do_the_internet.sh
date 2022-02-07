@@ -1,7 +1,7 @@
 #!/bin/bash -e
 # dependancies : mblaze, msmtp, offlineimap, newsboat
 # parameters
-refresh_interval=43200
+refresh_interval=432000
 inbox=~/mail/INBOX
 news=~/mail/Folders.News
 online_folder=~/mail/Folders.online
@@ -58,12 +58,14 @@ refresh_rss() {
 	current=$(date +%s)
 	last_modified=$(stat -c %Y $news_cache)
 	echo "****** RSS and Gemini ******"
+	remaining=$(( refresh_interval - current + last_modified))
+	hremaining=$(( remaining/3600 ))
 	if [ $(( current - last_modified)) -gt $refresh_interval ]
 	then
 		echo "Fetching RSS… (usually slow)"
 		$getrss
 	else
-		echo "No RSS refresh for now"
+		echo "No RSS refresh for now, next refresh in $hremaining hours"
 	fi
 }
 
