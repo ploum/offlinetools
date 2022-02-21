@@ -1,7 +1,7 @@
 #!/bin/bash -e
 # dependancies : mblaze, msmtp, offlineimap, newsboat
 # parameters
-refresh_interval=432000
+refresh_interval=43200
 inbox=~/mail/INBOX
 news=~/mail/Folders.News
 online_folder=~/mail/Folders.online
@@ -57,7 +57,6 @@ refresh_rss() {
 	# Third part: getting rss every $refresh_interval (in seconds)
 	current=$(date +%s)
 	last_modified=$(stat -c %Y $news_cache)
-	echo "****** RSS and Gemini ******"
 	remaining=$(( refresh_interval - current + last_modified))
 	hremaining=$(( remaining/3600 ))
 	if [ $(( current - last_modified)) -gt $refresh_interval ]
@@ -82,6 +81,7 @@ fetch_emails() {
 
 
 display_dashboard() {
+	export MBLAZE_PAGER=""
 	echo "******************"
 	# Sixth part : dashboard
 	echo "$($displayrss) in RSS newsboat"
@@ -99,7 +99,7 @@ display_dashboard() {
 	echo "$nb_inbox mail(s) in Inbox"
 	mlist $inbox|mblaze-sort -d|mscan
 	echo "************"
-	echo "TODO : calendar, push git, open URLS, list of tasks"
+	echo "TODO : calendar, push git, list of tasks"
 	echo "$nb_online tasks to do online"
 }
 
@@ -116,6 +116,7 @@ then
 	send_urls
 	list_outbox
 	send_emails
+	echo "****** RSS and Gemini ******"
 	refresh_rss
 	refresh_gemini
 	fetch_emails
