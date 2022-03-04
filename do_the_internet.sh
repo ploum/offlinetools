@@ -1,7 +1,8 @@
 #!/bin/bash -e
 # dependancies : mblaze, msmtp, offlineimap, newsboat
 # parameters
-refresh_interval=43200
+refresh_interval=518400
+#refresh_interval=432000
 inbox=~/mail/INBOX
 news=~/mail/Folders.News
 online_folder=~/mail/Folders.online
