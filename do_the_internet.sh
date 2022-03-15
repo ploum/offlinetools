@@ -1,7 +1,7 @@
 #!/bin/bash -e
 # dependancies : mblaze, msmtp, offlineimap, newsboat
 # parameters
-refresh_interval=518400
+refresh_interval=51840
 #refresh_interval=432000
 inbox=~/mail/INBOX
 news=~/mail/Folders.News
@@ -85,7 +85,7 @@ display_dashboard() {
 	export MBLAZE_PAGER=""
 	echo "******************"
 	# Sixth part : dashboard
-	echo "$($displayrss) in RSS newsboat"
+	# echo "$($displayrss) in RSS newsboat"
 	nb_news=$(mlist $news|wc -l)
 	nb_online=$(mlist $online_folder|wc -l)
 	nb_gemini=$(cat $geminitour|wc -l)
