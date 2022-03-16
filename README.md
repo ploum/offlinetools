@@ -3,7 +3,9 @@ Tools to spend more time offline
 
 ## do_the_internet.sh
 
-depends: protonmail-bridge, msmtp, offlineimap, newsboat, mblaze
+depends: protonmail-bridge, msmtp, offlineimap, newsboat, mblaze and offpunk
+
+See [Offpunk smolnet browser](https://tildegit.org/ploum/AV-98-offline).
 
 A script that checks:
 
