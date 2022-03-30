@@ -44,6 +44,18 @@ send_urls () {
 	fi
 }
 
+git_push() {
+	cd ~/dev/gemlog
+	echo "***** Rawtext.club gemlog *****"
+	git push
+	echo "***** Offpunk ******"
+	cd ~/dev/offpunk
+	git push
+	echo "***** Offline tools ****"
+	cd ~/dev/offlinetools
+	git push
+}
+
 list_outbox() {
 	echo "***** Mails to send *****"
 	$listqueue
@@ -100,7 +112,6 @@ display_dashboard() {
 	echo "$nb_inbox mail(s) in Inbox"
 	mlist $inbox|mblaze-sort -d|mscan
 	echo "************"
-	echo "TODO : calendar, push git, list of tasks"
 	echo "$nb_online tasks to do online"
 }
 
@@ -117,6 +128,7 @@ then
 	send_urls
 	list_outbox
 	send_emails
+	git_push
 	echo "****** RSS and Gemini ******"
 	refresh_rss
 	refresh_gemini
