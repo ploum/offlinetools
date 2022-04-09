@@ -51,6 +51,7 @@ git_push() {
 	echo "***** Offpunk ******"
 	cd ~/dev/offpunk
 	git push
+	git push tildegit
 	echo "***** Offline tools ****"
 	cd ~/dev/offlinetools
 	git push
