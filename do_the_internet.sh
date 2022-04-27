@@ -82,6 +82,17 @@ refresh_rss() {
 	fi
 }
 
+remaining(){
+	current=$(date +%s)
+	last_modified=$(stat -c %Y $news_cache)
+	remaining=$(( refresh_interval - current + last_modified))
+	hremaining=$(( remaining/3600 ))
+	if [ $(( current - last_modified)) -lt $refresh_interval ]
+	then
+		echo "Next refresh in $hremaining hours"
+	fi
+}
+
 refresh_gemini() {
 	$geminisync --sync --assume-yes --cache-validity $refresh_interval
 }
@@ -131,6 +142,7 @@ then
 	send_emails
 	git_push
 	echo "****** RSS and Gemini ******"
+	remaining
 	refresh_rss
 	refresh_gemini
 	fetch_emails
@@ -145,6 +157,7 @@ else
 	cat $to_fetch
 	echo " * * $nb_forlater in Forlater list"
 	tail +$(($headers+1)) $urls
+	remaining
 fi
 
 display_dashboard
