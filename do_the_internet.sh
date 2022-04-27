@@ -1,8 +1,8 @@
 #!/bin/bash -e
 # dependancies : mblaze, msmtp, offlineimap, newsboat
 # parameters
-refresh_interval=51840
-#refresh_interval=432000
+#refresh_interval=51840
+refresh_interval=432000
 inbox=~/mail/INBOX
 news=~/mail/Folders.News
 online_folder=~/mail/Folders.online
@@ -122,7 +122,7 @@ shutdown_connection() {
 
 
 # Check for protonmail bridge
-pid=$(pgrep protonmail|wc -l)
+pid=$(pgrep proton-bridge|wc -l)
 if [ "$pid" -gt 0 ]
 then
 	echo "Protonmail Bridge running"
